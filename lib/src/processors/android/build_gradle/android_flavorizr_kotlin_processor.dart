@@ -41,12 +41,14 @@ class AndroidFlavorizrKotlinProcessor extends StringProcessor {
   String execute() {
     final buffer = StringBuffer();
 
-    logger.detail('[$AndroidFlavorizrKotlinProcessor] Generating flavors in Kotlin DSL');
+    logger.detail(
+        '[$AndroidFlavorizrKotlinProcessor] Generating flavors in Kotlin DSL');
 
     logger.detail('[$AndroidFlavorizrKotlinProcessor] Generating AppExtension');
     _appendStartContent(buffer);
 
-    logger.detail('[$AndroidFlavorizrKotlinProcessor] Generating flavor dimensions');
+    logger.detail(
+        '[$AndroidFlavorizrKotlinProcessor] Generating flavor dimensions');
     _appendFlavorsDimension(buffer);
 
     logger.detail('[$AndroidFlavorizrKotlinProcessor] Generating flavors');
@@ -119,6 +121,15 @@ class AndroidFlavorizrKotlinProcessor extends StringProcessor {
         );
       });
 
+      final Map<String, String> manifestPlaceholders =
+          LinkedHashMap.fromEntries([
+        ...config.app?.android?.manifestPlaceholders.entries ?? [],
+        ...flavor.android?.manifestPlaceholders.entries ?? [],
+      ]);
+      manifestPlaceholders.forEach((key, res) {
+        buffer.writeln('            manifestPlaceholders["$key"] = "$res"');
+      });
+
       buffer.writeln('        }');
     });
 
@@ -126,8 +137,10 @@ class AndroidFlavorizrKotlinProcessor extends StringProcessor {
   }
 
   void _appendBuildConfig(StringBuffer buffer) {
-    final hasBuildConfigFields = config.app?.android?.buildConfigFields.isNotEmpty == true ||
-        config.androidFlavors.values.any((flavor) => flavor.android?.buildConfigFields.isNotEmpty == true);
+    final hasBuildConfigFields =
+        config.app?.android?.buildConfigFields.isNotEmpty == true ||
+            config.androidFlavors.values.any((flavor) =>
+                flavor.android?.buildConfigFields.isNotEmpty == true);
 
     if (hasBuildConfigFields) {
       buffer.writeln();

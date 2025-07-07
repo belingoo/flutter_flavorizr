@@ -42,10 +42,14 @@ class Android {
   @JsonKey(disallowNullValue: true, defaultValue: {})
   final Map<String, BuildConfigField> buildConfigFields;
 
+  @JsonKey(disallowNullValue: true, defaultValue: {})
+  final Map<String, String> manifestPlaceholders;
+
   const Android({
     this.flavorDimensions = kFlavorDimensionValue,
     this.resValues = const {},
     this.buildConfigFields = const {},
+    this.manifestPlaceholders = const {},
   });
 
   factory Android.fromJson(Map<String, dynamic> json) =>

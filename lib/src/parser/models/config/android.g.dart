@@ -9,7 +9,11 @@ part of 'android.dart';
 Android _$AndroidFromJson(Map json) {
   $checkKeys(
     json,
-    disallowNullValues: const ['resValues', 'buildConfigFields'],
+    disallowNullValues: const [
+      'resValues',
+      'buildConfigFields',
+      'manifestPlaceholders'
+    ],
   );
   return Android(
     flavorDimensions: json['flavorDimensions'] as String? ?? 'flavor-type',
@@ -21,6 +25,10 @@ Android _$AndroidFromJson(Map json) {
     buildConfigFields: (json['buildConfigFields'] as Map?)?.map(
           (k, e) => MapEntry(k as String,
               BuildConfigField.fromJson(Map<String, dynamic>.from(e as Map))),
+        ) ??
+        {},
+    manifestPlaceholders: (json['manifestPlaceholders'] as Map?)?.map(
+          (k, e) => MapEntry(k as String, e as String),
         ) ??
         {},
   );

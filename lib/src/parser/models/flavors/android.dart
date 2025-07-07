@@ -47,6 +47,9 @@ class Android extends OS {
   @JsonKey(disallowNullValue: true, defaultValue: {})
   final Map<String, BuildConfigField> buildConfigFields;
 
+  @JsonKey(disallowNullValue: true, defaultValue: {})
+  final Map<String, String> manifestPlaceholders;
+
   @JsonKey(disallowNullValue: true)
   final AGConnect? agconnect;
 
@@ -58,6 +61,7 @@ class Android extends OS {
     this.customConfig = const {},
     this.resValues = const {},
     this.buildConfigFields = const {},
+    this.manifestPlaceholders = const {},
     this.agconnect,
     super.generateDummyAssets,
     super.firebase,

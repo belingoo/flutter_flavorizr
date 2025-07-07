@@ -17,6 +17,7 @@ Android _$AndroidFromJson(Map json) {
       'customConfig',
       'resValues',
       'buildConfigFields',
+      'manifestPlaceholders',
       'agconnect',
       'adaptiveIcon'
     ],
@@ -35,6 +36,10 @@ Android _$AndroidFromJson(Map json) {
     buildConfigFields: (json['buildConfigFields'] as Map?)?.map(
           (k, e) => MapEntry(k as String,
               BuildConfigField.fromJson(Map<String, dynamic>.from(e as Map))),
+        ) ??
+        {},
+    manifestPlaceholders: (json['manifestPlaceholders'] as Map?)?.map(
+          (k, e) => MapEntry(k as String, e as String),
         ) ??
         {},
     agconnect: json['agconnect'] == null
